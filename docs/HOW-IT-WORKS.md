@@ -1,63 +1,70 @@
 # How Requesting Code Review Works
 
-This page expands the concise contract in `SKILL.md`. The diagrams are static SVG files so they render directly on GitHub on both phones and desktop browsers.
+The visuals on this page are static SVGs, so they render directly on GitHub on phones and desktop browsers. Each one is generated from a model specific to this skill.
 
-## End-to-end workflow
+## System architecture
 
-![Step-by-step workflow for Requesting Code Review](../assets/workflow.svg)
+![Detailed system map for Requesting Code Review](../assets/system-map.svg)
 
-### 1. Confirm the engineering question and allowed scope
+### Components
 
-At this stage, record the relevant input, the decision made, and the evidence that allows the workflow to continue. If the evidence is missing or contradictory, stop and report the blocker before moving to step 2.
-### 2. Inspect the smallest relevant evidence set
+- **1. Local changes:** participates in inspect the exact change set.
+- **2. Security scan:** participates in run secrets and dependency checks.
+- **3. Quality checks:** participates in run tests lint and formatting.
+- **4. Review brief:** participates in fix safe mechanical issues.
+- **5. Reviewer handoff:** participates in summarize behavior risk and evidence.
 
-At this stage, record the relevant input, the decision made, and the evidence that allows the workflow to continue. If the evidence is missing or contradictory, stop and report the blocker before moving to step 3.
-### 3. Form a testable explanation or change plan
+## Actor and data sequence
 
-At this stage, record the relevant input, the decision made, and the evidence that allows the workflow to continue. If the evidence is missing or contradictory, stop and report the blocker before moving to step 4.
-### 4. Perform the bounded analysis or implementation
+![Actor and data sequence for Requesting Code Review](../assets/operation-sequence.svg)
 
-At this stage, record the relevant input, the decision made, and the evidence that allows the workflow to continue. If the evidence is missing or contradictory, stop and report the blocker before moving to step 5.
-### 5. Run focused checks and compare expected behavior
+### 1. Inspect the exact change set
 
-At this stage, record the relevant input, the decision made, and the evidence that allows the workflow to continue. If the evidence is missing or contradictory, stop and report the blocker before moving to step 6.
-### 6. Report evidence, limitations, and next action
+**Primary surface:** `Local changes`
 
-At this stage, record the relevant input, the decision made, and the evidence that allows the workflow to continue. If the evidence is missing or contradictory, stop and report the blocker before moving to step 6.
+Record the concrete input, the operation performed, and the evidence produced at this stage. Continue only when the output is sufficient for the next stage; otherwise preserve the blocker and stop.
+### 2. Run secrets and dependency checks
 
-## Safety boundary
+**Primary surface:** `Security scan`
 
-![Safety and approval boundaries for Requesting Code Review](../assets/safety-boundary.svg)
+Record the concrete input, the operation performed, and the evidence produced at this stage. Continue only when the output is sufficient for the next stage; otherwise preserve the blocker and stop.
+### 3. Run tests lint and formatting
 
-Before any external write or consequential operation, show the exact target and proposed effect, then obtain explicit authorization.
+**Primary surface:** `Quality checks`
 
-The workflow must also stop when:
+Record the concrete input, the operation performed, and the evidence produced at this stage. Continue only when the output is sufficient for the next stage; otherwise preserve the blocker and stop.
+### 4. Fix safe mechanical issues
 
-- The user does not own or control the target.
-- Authentication exists but the requested authority is unclear.
-- Inputs contain private material that is not necessary for the task.
-- A result cannot be verified independently.
-- The requested action conflicts with repository, platform, or organizational policy.
+**Primary surface:** `Review brief`
 
-## Evidence model
+Record the concrete input, the operation performed, and the evidence produced at this stage. Continue only when the output is sufficient for the next stage; otherwise preserve the blocker and stop.
+### 5. Summarize behavior risk and evidence
 
-| Stage | Evidence to retain |
-| --- | --- |
-| Scope | The exact request, target, constraints, and success criteria. |
-| Inspection | Source files, tool output, or current-state observations actually used. |
-| Decision | The reason for the selected path and any rejected alternatives that affect safety. |
-| Execution | The artifact or bounded operation result—not merely an attempt message. |
-| Verification | A direct check against the target and acceptance criteria. |
-| Handoff | Remaining risks, withheld actions, and the smallest useful next step. |
+**Primary surface:** `Reviewer handoff`
 
-## Reliability principles
+Record the concrete input, the operation performed, and the evidence produced at this stage. Continue only when the output is sufficient for the next stage; otherwise preserve the blocker and stop.
+### 6. Request review with a focused brief
 
-- Prefer the smallest reversible action that can answer the request.
-- Separate observed facts from interpretations.
-- Never infer permission from a logged-in session alone.
-- Treat failed or missing verification as an incomplete run.
-- Preserve user work and avoid unrelated changes.
+**Primary surface:** `Local changes`
 
-## Capability boundary
+Record the concrete input, the operation performed, and the evidence produced at this stage. Continue only when the output is sufficient for the next stage; otherwise preserve the blocker and stop.
 
-It does not replace project-specific tests, code review, or production approval. This package defines how to reason and verify; the adopter is responsible for connecting compatible tools and testing them in their own environment.
+## Example output shape
+
+![Illustrative output for Requesting Code Review](../assets/example-output.svg)
+
+The example is a visual contract: a real run may look different, but it should expose comparable state, provenance, and verification information. It is not presented as evidence of a live external action.
+
+## Decision and stop conditions
+
+![Decision guide for Requesting Code Review](../assets/decision-guide.svg)
+
+The workflow stops when the target is ambiguous, the relevant surface is unavailable or unauthorized, or the final artifact cannot be checked. A logged-in session or successful tool call is not by itself proof that the requested outcome is complete.
+
+## Verification checklist
+
+- Confirm every component shown in the system map exists in the target environment.
+- Trace the actor sequence using actual tool output or artifact state.
+- Compare the result with the example-output information contract.
+- Re-read or reopen the final artifact instead of trusting an attempt message.
+- Report omitted stages, unsupported capabilities, and remaining human decisions.

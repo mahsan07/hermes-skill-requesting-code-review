@@ -17,3 +17,9 @@ Prepare changes for review using a repeatable pre-commit quality gate.
 6. Leave unresolved uncertainty visible.
 
 Never claim a check passed if it was not run or if its output was incomplete.
+
+<!-- JIT-HARNESS:START -->
+## Harness contract
+
+For runtime adaptation or benchmarking, read [docs/JIT-HARNESS.md](docs/JIT-HARNESS.md) and validate [harness/manifest.json](harness/manifest.json). Treat the manifest as a planning and verification contract, not as authority to invoke tools. Preserve the skill's existing approval boundaries, stop on permission ambiguity, and do not claim successful execution without re-reading the resulting artifact or state.
+<!-- JIT-HARNESS:END -->
